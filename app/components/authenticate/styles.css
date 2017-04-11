@@ -1,0 +1,15 @@
+.container {
+  composes: centeredContainer from '../../shared_styles/styles.css';
+}
+
+.header {
+  composes: largeHeader from '../../shared_styles/styles.css';
+}
+
+.subHeader {
+  composes: subHeader from '../../shared_styles/styles.css';
+}
+
+.button {
+  composes: headerButton from '../../shared_styles/styles.css';
+}

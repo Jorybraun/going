@@ -1,0 +1,13 @@
+.mapWrapper {
+  height: 500px;
+  position: relative;
+  width: 100%;
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+
+.map {
+  width: 100% !important;
+  height: 100% !important;
+}

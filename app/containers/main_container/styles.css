@@ -1,0 +1,8 @@
+.outerContainer {
+  width: 100%
+}
+
+.innerContainer {
+  max-width: 900px;
+  margin: auto;
+}
