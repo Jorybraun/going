@@ -1,3 +1,6 @@
+import { getAddress } from '../../helpers/map'
+const MAP_LOADED = "MAP_LOADED"
+const UNLOAD_MAP = "UNLOAD_MAP"
 const FETCHING_MAP_LOCATION = "FETCHING_MAP_LOCATION"
 const FETCHING_MAP_LOCATION_SUCCESS = "FETHCING_MAP_LOCATION_SUCCESS"
 const FETCHING_MAP_LOCATION_FAILURE = "FETCHING_MAP_LOCATION_FAILURE"
@@ -10,16 +13,20 @@ const SET_CURRENT_LOCATION = "SET_CURRENT_LOCATION"
 
 export const mapLoaded = (map) => ({
   type: MAP_LOADED,
-  map
+  mapReference: map
+})
+
+export const unloadMap = () => ({
+  type: UNLOAD_MAP
 })
 
 export const fetchingMapLocation = () => ({
   type: FETCHING_MAP_LOCATION,
 })
 
-export const fetchingMapLocationSucess = (locaiton, timestamp) => ({
+export const fetchingMapLocationSucess = (searchResults, timestamp) => ({
   type: FETCHING_MAP_LOCATION_SUCCESS,
-  location,
+  searchResults,
   timestamp
 })
 
@@ -32,6 +39,26 @@ export const setCurrentLocation = (location) => ({
   type: SET_CURRENT_LOCATION,
   location,
 })
+
+export const clearCurrentLocation = () => ({
+  type: CLEAR_CURRENT_LOCATION
+})
+
+export const getAndSetCurrentLocation = (location) => (
+  (dispatch) => {
+    fetchingMapLocation()
+    getAddress(location).then((response) => {
+      const { results } = response.data
+
+      if(results.length === 1){
+        dispatch(setCurrentLocation(results[0]))
+      }
+      dispatch(fetchingMapLocationSucess(results, Date.now()))
+    }).catch((error) => {
+      dispatch(fetchingMapLocationFailure())
+    })
+  }
+)
 
 const locationInitialState = {
   address: '',
@@ -59,32 +86,49 @@ const initialState = {
   isFetching: false,
   locations: [],
   markers: [],
-  currentLocation: { location: {lat: 45.501689045, lng: -73.567256073}}
+  currentLocation: { address: '', location: {lat: '', lng: ''}}
 }
 
 export default function map (state = initialState, action) {
   switch (action.type) {
-    // case (FETCHING_MAP_LOCATIONS) :
-    //   return {
-    //     ...state,
-    //     isFetching: true,
-    //   }
-    // case (FETCHING_LOCATION_SUCCESS) :
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //     locations: [...action.locations],
-    //   }
-    // case (FETCHING_MAP_LOCATION_FAILURE) :
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //     error: action.error
-    //   }
+    case (MAP_LOADED) :
+      return {
+        ...state,
+        mapLoaded: true,
+        mapReference: action.mapReference
+      }
+    case (UNLOAD_MAP) :
+      return {
+        ...state,
+        mapLoaded: true,
+        mapReference: action.mapReference
+      }
+    case (FETCHING_MAP_LOCATION) :
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case (FETCHING_MAP_LOCATION_SUCCESS) :
+      return {
+        ...state,
+        isFetching: false,
+        searchResults: [...action.locations],
+      }
+    case (FETCHING_MAP_LOCATION_FAILURE) :
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error
+      }
     case (SET_CURRENT_LOCATION) :
       return {
         ...state,
         currentLocation: location(state, action)
+      }
+    case (CLEAR_CURRENT_LOCATION) :
+      return {
+        ...state,
+        currentLocation: location(initialState, action)
       }
     default :
       return state

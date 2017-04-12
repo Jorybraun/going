@@ -8,7 +8,6 @@ class Search extends Component {
 
     return(
       <form onSubmit={(e) => {
-        console.log(this.refs.search.value)
         e.preventDefault()
         handleSubmit(this.refs.search.value)
       }}>

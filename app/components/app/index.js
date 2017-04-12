@@ -1,15 +1,15 @@
 import React from 'react'
-import { MapContainer } from '../../containers'
-
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { formatAddress } from '../../helpers/map'
+import { MapContainer, LocationContainer } from '../../containers'
 import {
   CurrentLocation,
   HeaderMessage,
   Search,
+  SearchResults,
 } from '../'
 
 import { container } from './styles.css'
-
-
 
 const App = (props) => {
 
@@ -19,32 +19,27 @@ const App = (props) => {
     isFetching,
     getLocation,
     setCurrentLocation,
-    google,
-    getMapState,
   } = props
 
   return (
     <div className={container}>
-      <HeaderMessage
-        currentLocation={currentLocation}
-        searchResults={searchResults}
-        isFetching={isFetching} />
+      <Switch>
+        <Route exact path="/locations/search/" render={() => (
+          <div>
+            <HeaderMessage currentLocation={currentLocation} searchResults={searchResults} />
+            <Search handleSubmit={(address) => getLocation(address)} />
+            <SearchResults selectLocation={(location) => setCurrentLocation(location)} results={searchResults} />
+            { currentLocation.address &&
+              <Redirect
+                to={`/locations/${formatAddress(currentLocation.address)}`} />
+            }
+          </div>
+        )}/>
 
-      <CurrentLocation
-        currentLocation={currentLocation}
-        searchResults={searchResults}
-        selectLocation={(location) => setCurrentLocation(location)} />
-
-      { ( !currentLocation.address && searchResults.length === 0 ) &&
-        <Search handleSubmit={(address) => getLocation(address)} />
-      }
-
-      <MapContainer
-        google={google}
-        passMapState={(map) => getMapState(map)} />
-
-
-
+        <Route path="/locations/:location/" render={({match}) => (
+          <LocationContainer match={match} />
+        )}/>
+      </Switch>
     </div>
   )
 }

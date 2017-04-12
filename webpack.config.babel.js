@@ -48,12 +48,7 @@ var developmentConfig = {
     hot: true,
     inline: true,
     port: 8080,
-    historyApiFallback: {
-      index: 'index.html',
-      rewrites: [
-        { from: /^(.*?)\/bundle\.js/, to: './bundle.js' }
-      ]
-    }
+    historyApiFallback: true
   },
   plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()],
 }

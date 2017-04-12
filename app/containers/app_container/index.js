@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 
-import { __API_KEY__ } from '../../../secrets'
-import { GoogleApiWrapper } from 'google-maps-react'
 import { getAddress } from '../../helpers/map'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as mapActionCreators from '../../redux/modules/map'
+import { Redirect } from 'react-router-dom'
 
 import { App } from '../../components'
 
@@ -14,50 +13,41 @@ class AppContainer extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      map: '',
-      searchResults: []
+      searchResults: [],
+      locationSelected: false
     }
 
-    this._getLocation = this._getLocation.bind(this)
-    this._getMapState = this._getMapState.bind(this)
-    this._setCurrentLocation = this._setCurrentLocation.bind(this)
+    this._getSearchResults = this._getSearchResults.bind(this)
+    this._dispatchCurrentLocation = this._dispatchCurrentLocation.bind(this)
   }
 
-  _getMapState (map) {
-    this.setState({map})
-  }
-
-  _getLocation (address) {
+  _getSearchResults (address) {
     getAddress(address).then((data) => {
       const { results } = data.data
       this.setState({searchResults: results})
     })
   }
 
-  _setCurrentLocation (location) {
+  _dispatchCurrentLocation (location) {
     this.props.setCurrentLocation(location)
-    this.setState({searchResults: []})
+    setTimeout(() => this.setState({
+      searchResults: [],
+    }), 100)
   }
 
   render () {
 
-    const { searchResults } = this.state
-    const { isFetching, currentLocation, google, match } = this.props
+    const { searchResults, redirectToLocation } = this.state
+    const { isFetching, currentLocation, google, match, history } = this.props
 
-    return <App google={google}
-                match={match}
-                isFetching={false}
+
+    return <App isFetching={this.props.isFetching}
                 searchResults={searchResults}
                 currentLocation={currentLocation}
-                getLocation={this._getLocation.bind(this)}
-                getMapState={this._getMapState.bind(this)}
-                setCurrentLocation={this._setCurrentLocation.bind(this)} />
+                getLocation={this._getSearchResults.bind(this)}
+                setCurrentLocation={this._dispatchCurrentLocation.bind(this)} />
   }
 }
-
-const GoogleMapConnectedApp = GoogleApiWrapper({
-  apiKey: __API_KEY__,
-})(AppContainer)
 
 const MapStateToProps = (state) => ({
   isFetching: state.map.isFetching,
@@ -68,5 +58,24 @@ const MapDispatchToProps = (dispatch) => (
   bindActionCreators(mapActionCreators, dispatch)
 )
 
-export default connect(MapStateToProps, MapDispatchToProps)(GoogleMapConnectedApp)
+export default connect(MapStateToProps, MapDispatchToProps)(AppContainer)
+
+
+// componentDidMount() {
+//   const { currentLocation: { address: currentAddress },
+//           match: { params: { location: urlAddress } }
+//         } = this.props
+
+//   if(typeof urlAddress !== undefined)
+
+//   this._matchAdresses(currentAddress, urlAddress) && this._getLocation(urlAddress)
+
+// }
+
+// _matchAdresses (currentAddress, urlAddress) {
+//   if(typeof currentAddress !== undefined) {
+//     return formatAddress(currentAddress) === formatAddress(urlAddress)
+//   }
+//   return typeof urlAddress !== undefined
+// }
 

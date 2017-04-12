@@ -6,6 +6,6 @@ export const getAddress = (address) => {
   return axios.get(url)
 }
 
-const formatAddress = (address) => {
-  return address.split(' ').join('+');
+export const formatAddress = (address) => {
+  return address.split(/\., |\.,|, |,| |\./).join('+')
 }

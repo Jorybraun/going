@@ -1,45 +1,75 @@
 import React, { Component } from 'react'
 import Map from 'google-maps-react'
-import { map, mapWrapper } from './style.css'
 import { connect } from 'react-redux'
+import { GoogleApiWrapper } from 'google-maps-react'
+import { mapLoaded, unloadMap } from '../../redux/modules/map'
+import { bindActionCreators } from 'redux'
+
+import { __API_KEY__ } from '../../../secrets'
+import { map, mapWrapper } from './style.css'
 
 class MapContainer extends Component {
 
-  componentDidMount() {
-    this.props.passMapState(this.refs.map)
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    }
   }
 
   componentWillReceiveProps(nextProps) {
 
-    if (nextProps.currentLocation !== this.props.currentLocation) {
-      let { map } = this.refs.map;
-      map.setCenter(nextProps.currentLocation)
+    if (!this.state.visible && this._checkCoords(nextProps.coordinates)) {
+      this.setState({visible: true})
+
+      setTimeout(() => {
+        this.props.mapLoaded(this.refs.map)
+      }, 100)
     }
 
+    if (this.props.mapLoaded && this.props.mapRefernece) {
+      this.props.mapReferece.map.setCenter(nextProps.coordinates)
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unloadMap()
+  }
+
+  _checkCoords(coordinates){
+    return coordinates.lat || coordinates.lng
   }
 
   render () {
     return (
       <div className={mapWrapper}>
-        <Map
-          ref='map'
-          google={this.props.google}
-          className={map}
-          zoom={14}
-          initialCenter={this.props.currentLocation}
-        />
+        { this.state.visible &&
+          <Map
+            ref='map'
+            google={this.props.google}
+            className={map}
+            visible={this.state.visible}
+            zoom={14}
+            initialCenter={this.props.coordinates} />
+        }
       </div>
     )
   }
 }
 
-MapContainer.propTypes = {
-  google: React.PropTypes.object,
-}
+const GoogleMapConnectedApp = GoogleApiWrapper({
+  apiKey: __API_KEY__,
+})(MapContainer)
 
 const mapStateToProps = (state) => ({
-  currentLocation: state.map.currentLocation.location
+  mapLoaded: state.map.mapLoaded,
+  mapReference: state.map.mapReference,
+  coordinates: state.map.currentLocation.location
 })
 
-export default connect(mapStateToProps, null)(MapContainer)
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({mapLoaded, unloadMap}, dispatch)
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoogleMapConnectedApp)
 

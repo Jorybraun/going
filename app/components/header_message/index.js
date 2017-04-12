@@ -1,8 +1,6 @@
 import React from 'react'
 
-const HeaderMessage = ({currentLocation, searchResults, isFetching}) => {
-  if (isFetching) { return <h2> '...Searching' </h2> }
-
+const HeaderMessage = ({currentLocation, searchResults}) => {
   if (searchResults.length < 1 && !currentLocation.address) {
     return  <h2> {'Where Are You Going'} </h2>
   }else if (!currentLocation.address && searchResults.length > 0) {

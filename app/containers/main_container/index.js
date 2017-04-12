@@ -21,11 +21,10 @@ class MainContainer extends Component {
         <Router>
           <div className={innerContainer}>
             <Navigation isAuthed={this.props.isAuthed} />
-            <Switch>
-              <Route exact path="/" component={WelcomeContainer} />
-              <Route path="/authenticate" component={AuthenticateContainer} />
-              <Route path="/locations/" component={AppContainer} />
-            </Switch>
+            <Route exact path="/" component={WelcomeContainer} />
+            <Route path="/authenticate" component={AuthenticateContainer} />
+            <Route exact path="/locations/" component={AppContainer} />
+            <Route path="/locations/:location" component={AppContainer} />
           </div>
         </Router>
       </div>

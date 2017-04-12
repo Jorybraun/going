@@ -1,0 +1,24 @@
+.locationWrapper {
+  background-color: white;
+  margin: 24px 0;
+  text-align: center;
+  padding: 24px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.locationWrapper button:first-child {
+  margin-right: auto;
+}
+
+.locationWrapper button:last-child {
+  margin-left: auto;
+}
+
+.locationWrapper button {
+  background-color: transparent;
+  padding: 12px;
+  border: 1px solid #000;
+}
