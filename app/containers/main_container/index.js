@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { AppContainer } from '../'
-import { WelcomeContainer } from '../'
-import { AuthenticateContainer } from '../'
 import { Navigation } from '../../components'
 import { outerContainer, innerContainer } from './styles.css'
 
 import {
+  WelcomeContainer,
+  AuthenticateContainer,
+  SearchContainer,
+  LocationContainer
+} from '../'
+
+import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch
+  Link
 } from 'react-router-dom'
 
 class MainContainer extends Component {
@@ -22,9 +24,9 @@ class MainContainer extends Component {
           <div className={innerContainer}>
             <Navigation isAuthed={this.props.isAuthed} />
             <Route exact path="/" component={WelcomeContainer} />
+            <Route path="/search" component={SearchContainer} />
             <Route path="/authenticate" component={AuthenticateContainer} />
-            <Route exact path="/locations/" component={AppContainer} />
-            <Route path="/locations/:location" component={AppContainer} />
+            <Route path="/locations/:location" component={LocationContainer} />
           </div>
         </Router>
       </div>

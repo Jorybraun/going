@@ -9,7 +9,9 @@ import {
   SearchResults,
 } from '../'
 
-import { container } from './styles.css'
+// TODO rename this to location container
+
+import { container, searchBar } from './styles.css'
 
 const App = (props) => {
 
@@ -23,23 +25,9 @@ const App = (props) => {
 
   return (
     <div className={container}>
-      <Switch>
-        <Route exact path="/locations/search/" render={() => (
-          <div>
-            <HeaderMessage currentLocation={currentLocation} searchResults={searchResults} />
-            <Search handleSubmit={(address) => getLocation(address)} />
-            <SearchResults selectLocation={(location) => setCurrentLocation(location)} results={searchResults} />
-            { currentLocation.address &&
-              <Redirect
-                to={`/locations/${formatAddress(currentLocation.address)}`} />
-            }
-          </div>
-        )}/>
-
-        <Route path="/locations/:location/" render={({match}) => (
-          <LocationContainer match={match} />
-        )}/>
-      </Switch>
+      <Route path="/locations/:location/" render={({match}) => (
+        <LocationContainer match={match} />
+      )}/>
     </div>
   )
 }

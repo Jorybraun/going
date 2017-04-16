@@ -18,6 +18,8 @@ class LocationContainer extends Component {
   componentDidMount () {
     const { currentLocation, match } = this.props
 
+    console.log(match.params.location)
+
     if (!currentLocation.address) {
       this.props.getAndSetCurrentLocation(match.params.location)
     }
@@ -32,7 +34,7 @@ class LocationContainer extends Component {
     const { currentLocation } = this.props
 
     if (this.state.clear) {
-      return <Redirect to="/locations/search" />
+      return <Redirect to="/search" />
     }
 
     return (
@@ -45,6 +47,8 @@ class LocationContainer extends Component {
     )
   }
 }
+
+
 
 const mapDispatchToProps = (dispatch) => (
   bindActionCreators({ getAndSetCurrentLocation, clearCurrentLocation }, dispatch)
