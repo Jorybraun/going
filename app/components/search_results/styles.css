@@ -1,6 +1,6 @@
 .locationWrapper {
   background-color: white;
-  margin: 24px 0;
+  margin: 12px 0;
   text-align: center;
   padding: 24px;
   width: auto;
@@ -22,3 +22,21 @@
   padding: 12px;
   border: 1px solid #000;
 }
+
+.resultList {
+  padding: 0px;
+  margin-top: 0px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.resultList li {
+  max-width: 300px;
+  width: 100%;
+  list-style: none;
+}
+
+.resultList li div:hover {
+  background: #c0ffff;
+}
+

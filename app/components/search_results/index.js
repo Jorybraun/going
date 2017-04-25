@@ -1,8 +1,20 @@
 import React from 'react'
-import { locationWrapper } from './styles.css'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+
+import { locationWrapper, resultList } from './styles.css'
+import transitions from './transitions.css'
 
 const SearchResults = ({results = [], selectLocation}) => (
-  <ul>
+  <CSSTransitionGroup
+    component="ul"
+    className={resultList}
+    transitionName={transitions}
+    transitionAppear={true}
+    transitionEnter={true}
+    transitionAppearTimeout={500}
+    transitionEnterTimeout={500}
+    transitionLeaveTimeout={300}>
+
     { results.map((loc, i) => (
       <li onClick={() => selectLocation(loc)} key={i}>
         <div className={locationWrapper}>
@@ -10,8 +22,14 @@ const SearchResults = ({results = [], selectLocation}) => (
         </div>
       </li>
     ))}
-  </ul>
+
+   </CSSTransitionGroup>
 )
+
+
+
+
+
 
 
 export default SearchResults

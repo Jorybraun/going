@@ -1,0 +1,19 @@
+.calenderTriggers {
+  display: flex;
+  justify-content: space-around;
+}
+
+.calenderTriggers > button {
+  background-color: #ffffff;
+  margin: 0;
+  border: 0px;
+  padding: 20px;
+  transition: background-color 0.4s ease-in-out, border 0.4s ease-in-out;
+  border: 1px #000 solid;
+}
+
+.calenderTriggers > button:hover {
+  background-color: transparent;
+  border: #000 1px solid;
+  transition: background-color 0.4s ease-in-out, border 0.4s ease-in-out;
+}

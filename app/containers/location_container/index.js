@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { MapContainer } from '../'
+import { MapContainer, NewEventContainer } from '../'
 import { CurrentLocation } from '../../components'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { container, mapContainer } from './styles.css'
 import { getAndSetCurrentLocation, clearCurrentLocation } from '../../redux/modules/map'
 
 class LocationContainer extends Component {
@@ -11,18 +12,31 @@ class LocationContainer extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      clear: false
+      clear: false,
+      eventFormVisible: false
     }
   }
 
   componentDidMount () {
     const { currentLocation, match } = this.props
 
-    console.log(match.params.location)
-
     if (!currentLocation.address) {
       this.props.getAndSetCurrentLocation(match.params.location)
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearCurrentLocation()
+  }
+
+  _showEventForm () {
+    this.setState({
+      eventFormVisible: !this.state.eventFormVisible,
+    })
+  }
+
+  _addNewEvent () {
+
   }
 
   _clearCurrentLocation () {
@@ -38,11 +52,20 @@ class LocationContainer extends Component {
     }
 
     return (
-      <div>
+      <div className={container}>
+        <div className={mapContainer}>
+          <MapContainer/>
+        </div>
         <CurrentLocation
           clear={() => this._clearCurrentLocation()}
-          currentLocation={currentLocation} />
-        <MapContainer/>
+          showEventForm={() => this._showEventForm()}
+          currentLocation={currentLocation}>
+
+          { this.state.eventFormVisible &&
+            <NewEventContainer />
+          }
+
+        </CurrentLocation>
       </div>
     )
   }

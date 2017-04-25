@@ -41,19 +41,17 @@ class MapContainer extends Component {
   }
 
   render () {
-    return (
-      <div className={mapWrapper}>
-        { this.state.visible &&
-          <Map
-            ref='map'
-            google={this.props.google}
-            className={map}
-            visible={this.state.visible}
-            zoom={14}
-            initialCenter={this.props.coordinates} />
-        }
-      </div>
-    )
+
+    if (this.state.visible) {
+      return <Map ref='map'
+                   google={this.props.google}
+                   className={map}
+                   visible={this.state.visible}
+                   zoom={14}
+                   initialCenter={this.props.coordinates} />
+    }
+
+    return null
   }
 }
 

@@ -1,0 +1,34 @@
+.enter {
+  opacity: 0.01;
+  transition: opacity 1.5s ease-in;
+  height: auto;
+  max-height: 0px;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in, max-height 0.5s ease-in;
+}
+.enter.enterActive {
+  opacity: 1;
+  max-height: 1000px;
+  transition: opacity 0.5s ease-in, max-height 0.5s ease-in;
+}
+.leave {
+  opacity: 1;
+  transition: opacity 1.5s ease-in;
+}
+
+.leave.leaveActive {
+  opacity: 0.01;
+}
+
+.appear{
+  opacity: 0.01;
+  height: auto;
+  max-height: 0px;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in, max-height 0.5s ease-in;
+}
+.appear.appearActive {
+  opacity: 1;
+  max-height: 1000px;
+  transition: opacity 0.5s ease-in, max-height 0.5s ease-in;
+}

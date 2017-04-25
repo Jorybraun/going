@@ -13,7 +13,7 @@ import {
   SearchResults,
 } from '../../components'
 
-import { searchBar, container} from './styles.css'
+import { searchBar, container } from './styles.css'
 
 class SearchContainer extends Component {
   constructor (props) {

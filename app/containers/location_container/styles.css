@@ -1,0 +1,9 @@
+.container {
+  composes: centeredContainer from '../../shared_styles/styles.css';
+}
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  flex: 1;
+}

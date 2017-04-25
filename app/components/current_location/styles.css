@@ -1,24 +1,36 @@
 .locationWrapper {
-  background-color: white;
-  margin: 24px 0;
+  background-color: #fce8f1;
+  margin-top: auto;
   text-align: center;
   padding: 24px;
-  width: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  z-index: 1;
+  height: auto;
 }
 
-.locationWrapper button:first-child {
+.header button:first-child {
   margin-right: auto;
 }
 
-.locationWrapper button:last-child {
+.header button:last-child {
   margin-left: auto;
 }
 
-.locationWrapper button {
+.header button {
   background-color: transparent;
   padding: 12px;
   border: 1px solid #000;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: auto;
 }

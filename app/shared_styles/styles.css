@@ -26,7 +26,8 @@ html, body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: calc(100vh - 150px);
+  margin: 24px;
+  min-height: calc(100vh - 150px);
   border: 1px solid #000;
 }
 
@@ -34,6 +35,12 @@ html, body {
   font-weight: 100;
   font-size: 74px;
   margin-bottom: 12px;
+}
+
+@media (max-width: 750px){
+  .largeHeader {
+    font-size: 34px;
+  }
 }
 
 .subHeader {

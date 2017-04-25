@@ -1,0 +1,56 @@
+.form {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  align-content: space-between;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.fieldset {
+  margin: 24px;
+  flex: 0 0 auto;
+  display: flex;
+  border: 0px;
+  align-items: center;
+  flex-flow: row nowrap;
+}
+
+.fieldset label {
+  text-align: right;
+  padding-right: 6px;
+  margin-right: 6px;
+  flex: 1 0 0px;
+}
+
+.fieldset input {
+  flex : 1.75;
+  margin-left: auto;
+  height: 25px;
+  padding: 12px;
+  background-color: transparent;
+  border: 1px solid #000;
+  font-size: 14px;
+}
+
+.fieldset input:active{
+  background-color: #ffffff;
+}
+
+
+.fieldset input:focus {
+  background-color: #000;
+  color: #fff;
+}
+
+input[type="submit"] {
+  border: 1px solid #000;
+  padding: 20px;
+  background-color: transparent;
+}
+
+input[type="submit"]:hover {
+  background-color: #000;
+  color: #ffffff;
+}
