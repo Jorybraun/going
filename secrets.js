@@ -1,1 +1,0 @@
-export const __API_KEY__ =  "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo"
